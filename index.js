@@ -20,7 +20,12 @@ const port = process.env.PORT || 8080;
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASS}@cluster0.sr45p.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: true,
+    }
   )
   .then(console.log("COnnected"))
   .catch((err) => console.log(err));
@@ -30,7 +35,7 @@ const storage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, "img.jpeg");
+    cb(null, req.body.name);
   },
 });
 
